@@ -2,10 +2,14 @@
 export abstract class Engine
 {
 
-  protected GL: WebGLRenderingContext;
+  protected GL: WebGL2RenderingContext;
   constructor(private CANVAS: HTMLCanvasElement)
   {
     this.GL = CANVAS.getContext("webgl2")!;
+
+    if (this.GL === null) {
+      throw "Unable to initialize WebGL. Your browser or machine may not support it.";
+    }
   }
 
   #running = true;
