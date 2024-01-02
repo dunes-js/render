@@ -1,10 +1,12 @@
+import { WebGLClass } from "../WebGLClass.js";
 
-export class Program
+export class Program extends WebGLClass
 {
   #program: WebGLProgram;
 
-  constructor(private GL: WebGLRenderingContext)
+  constructor(GL: WebGLRenderingContext)
   {
+    super(GL);
     this.#program = GL.createProgram()!;
     if (!this.#program)
     {
