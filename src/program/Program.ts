@@ -4,7 +4,7 @@ export class Program extends WebGLClass
 {
   #program: WebGLProgram;
 
-  constructor(GL: WebGLRenderingContext)
+  constructor(GL: WebGL2RenderingContext)
   {
     super(GL);
     this.#program = GL.createProgram()!;

@@ -4,7 +4,7 @@
 export abstract class WebGLClass
 {
 
-  constructor(protected GL: WebGLRenderingContext)
+  constructor(protected GL: WebGL2RenderingContext)
   {
 
   }
