@@ -21,6 +21,11 @@ export abstract class Engine
     {
       await this.render();
       await this.update();
+
+      const error = this.GL.getError();
+      if (error !== this.GL.NO_ERROR) {
+        console.error('WebGL error:', error);
+      }
     }
     await this.conclude();
   }
