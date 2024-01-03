@@ -2,11 +2,11 @@
 export abstract class Engine
 {
 
-  protected GL: WebGL2RenderingContext;
-  constructor(private CANVAS: HTMLCanvasElement)
+  constructor(
+    protected CANVAS: HTMLCanvasElement,
+    protected GL: WebGL2RenderingContext = CANVAS.getContext("webgl2")!
+  )
   {
-    this.GL = CANVAS.getContext("webgl2")!;
-
     if (this.GL === null) {
       throw "Unable to initialize WebGL. Your browser or machine may not support it.";
     }
@@ -20,15 +20,14 @@ export abstract class Engine
     while(this.#running)
     {
       await this.render();
-      await this.update(this.CANVAS.width, this.CANVAS.height);
-
+      await this.update();
     }
     await this.conclude();
   }
 
   protected abstract init(): Promise<void>;
   protected abstract render(): Promise<void>;
-  protected abstract update(width: number, height: number): Promise<void>;
+  protected abstract update(): Promise<void>;
   protected abstract conclude(): Promise<void>;
   
   protected async quit()
