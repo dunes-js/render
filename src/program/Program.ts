@@ -1,12 +1,10 @@
-import { WebGLClass } from "../WebGLClass.js";
 
-export class Program extends WebGLClass
+export class Program
 {
   #program: WebGLProgram;
 
-  constructor(GL: WebGL2RenderingContext)
+  constructor()
   {
-    super(GL);
     this.#program = GL.createProgram()!;
     if (!this.#program)
     {
@@ -21,34 +19,34 @@ export class Program extends WebGLClass
 
   public onVertex(source: string): void
   {
-    const shader = Program.createShader(this.GL, source, this.GL.VERTEX_SHADER);
-    this.GL.attachShader(this.#program, shader);
+    const shader = Program.createShader(GL, source, GL.VERTEX_SHADER);
+    GL.attachShader(this.#program, shader);
   }
 
   public onFragment(source: string): void
   {
-    const shader = Program.createShader(this.GL, source, this.GL.FRAGMENT_SHADER);
-    this.GL.attachShader(this.#program, shader);
+    const shader = Program.createShader(GL, source, GL.FRAGMENT_SHADER);
+    GL.attachShader(this.#program, shader);
   }
 
   public link(): void
   {
-    this.GL.linkProgram(this.#program);
+    GL.linkProgram(this.#program);
 
-    if (!this.GL.getProgramParameter(this.#program, this.GL.LINK_STATUS)) {
-      const info = this.GL.getProgramInfoLog(this.#program);
+    if (!GL.getProgramParameter(this.#program, GL.LINK_STATUS)) {
+      const info = GL.getProgramInfoLog(this.#program);
       throw `Could not compile WebGL program. \n\n${info}`;
     }
   }
 
   public use(): void
   {
-    this.GL.useProgram(this.#program);
+    GL.useProgram(this.#program);
   }
 
   public unuse(): void
   {
-    this.GL.useProgram(null);
+    GL.useProgram(null);
   }
 
   private static createShader(GL: WebGLRenderingContext, source: string, type: number)
@@ -69,77 +67,77 @@ export class Program extends WebGLClass
 
   public uniform(name: string): WebGLUniformLocation | null
   {
-    return this.GL.getUniformLocation(this.#program, name);
+    return GL.getUniformLocation(this.#program, name);
   }
 
   public setBool(name: string, value: boolean)
   {
-    this.GL.uniform1i(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform1i(
+      GL.getUniformLocation(this.#program, name), 
       value?1:0
     );
   }
 
   public setInt(name: string, value: number)
   {
-    this.GL.uniform1i(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform1i(
+      GL.getUniformLocation(this.#program, name), 
       value
     );
   }
 
   public setFloat(name: string, value: number)
   {
-    this.GL.uniform1f(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform1f(
+      GL.getUniformLocation(this.#program, name), 
       value
     );
   }
 
   public setVec2(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform2fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform2fv(
+      GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
 
   public setVec3(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform3fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform3fv(
+      GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
 
   public setVec4(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform4fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniform4fv(
+      GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
 
   public setMat2(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix2fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniformMatrix2fv(
+      GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }
 
   public setMat3(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix3fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniformMatrix3fv(
+      GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }
 
   public setMat4(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix4fv(
-      this.GL.getUniformLocation(this.#program, name), 
+    GL.uniformMatrix4fv(
+      GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }

@@ -1,16 +1,7 @@
-
 export abstract class Engine
 {
-
-  constructor(
-    protected CANVAS: HTMLCanvasElement,
-    protected GL: WebGL2RenderingContext = CANVAS.getContext("webgl2")!
-  )
-  {
-    if (this.GL === null) {
-      throw "Unable to initialize WebGL. Your browser or machine may not support it.";
-    }
-  }
+  constructor()
+  {}
 
   #running = true;
 
@@ -22,8 +13,8 @@ export abstract class Engine
       await this.render();
       await this.update();
 
-      const error = this.GL.getError();
-      if (error !== this.GL.NO_ERROR) {
+      const error = GL.getError();
+      if (error !== GL.NO_ERROR) {
         console.error('WebGL error:', error);
       }
     }
