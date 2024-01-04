@@ -67,48 +67,80 @@ export class Program extends WebGLClass
     return shader;
   }
 
+  public uniform(name: string): WebGLUniformLocation | null
+  {
+    return this.GL.getUniformLocation(this.#program, name);
+  }
+
   public setBool(name: string, value: boolean)
   {
-    this.GL.uniform1i(name, value?1:0);
+    this.GL.uniform1i(
+      this.uniform(name), 
+      value?1:0
+    );
   }
 
   public setInt(name: string, value: number)
   {
-    this.GL.uniform1i(name, value);
+    this.GL.uniform1i(
+      this.uniform(name), 
+      value
+    );
   }
 
   public setFloat(name: string, value: number)
   {
-    this.GL.uniform1f(name, value);
+    this.GL.uniform1f(
+      this.uniform(name), 
+      value
+    );
   }
 
   public setVec2(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform2fv(name, value, offset, length);
+    this.GL.uniform2fv(
+      this.uniform(name), 
+      value, offset, length
+    );
   }
 
   public setVec3(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform3fv(name, value, offset, length);
+    this.GL.uniform3fv(
+      this.uniform(name), 
+      value, offset, length
+    );
   }
 
   public setVec4(name: string, value: number[], offset?: number, length?: number)
   {
-    this.GL.uniform4fv(name, value, offset, length);
+    this.GL.uniform4fv(
+      this.uniform(name), 
+      value, offset, length
+    );
   }
 
   public setMat2(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix2fv(name, transpose, value, offset, length);
+    this.GL.uniformMatrix2fv(
+      this.uniform(name), 
+      transpose, value, offset, length
+    );
   }
 
   public setMat3(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix3fv(name, transpose, value, offset, length);
+    this.GL.uniformMatrix3fv(
+      this.uniform(name), 
+      transpose, value, offset, length
+    );
   }
 
   public setMat4(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
-    this.GL.uniformMatrix4fv(name, transpose, value, offset, length);
+    this.GL.uniformMatrix4fv(
+      this.uniform(name), 
+      transpose, value, offset, length
+    );
   }
 }
