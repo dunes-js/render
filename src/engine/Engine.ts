@@ -9,6 +9,7 @@ export abstract class Engine
   #deltaTime = 0;
   #nowTime = 0;
 
+  protected delay = 0;
   protected frames = 0;
   protected updates = 0;
   protected maxUpdates = 60;
@@ -45,6 +46,11 @@ export abstract class Engine
       const error = GL.getError();
       if (error !== GL.NO_ERROR) {
         console.error('WebGL error:', error);
+      }
+
+      if (this.delay)
+      {
+        await new Promise(res => setTimeout(res, this.delay));
       }
     }
     await this.conclude();
