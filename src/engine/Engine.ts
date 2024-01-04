@@ -4,20 +4,14 @@ export abstract class Engine
   {}
 
   #running = true;
-  #lastTime = 0;
-  #timer = 0;
-  #deltaTime = 0;
-  #nowTime = 0;
 
-  protected delay = 0;
-  protected frames = 0;
-  protected updates = 0;
-  protected maxUpdates = 60;
+  #lastCalledTime = 0;
+  fps = 0;
+  delta = 0; 
+  delay = 0; 
 
   public async run()
   {
-    this.#lastTime = Date.now();
-    this.#timer = this.#lastTime;
 
     await this.init();
     while(this.#running)
@@ -25,23 +19,15 @@ export abstract class Engine
       await this.render();
       await this.update();
 
-      this.#nowTime = Date.now();
-      this.#deltaTime += (this.#nowTime - this.#lastTime) / this.maxUpdates;
-      this.#lastTime = this.#nowTime;
-      
-      while (this.#deltaTime >= 1000){
-        this.update();
-        this.updates++;
-        this.#deltaTime--;
+      if(!this.#lastCalledTime) {
+        this.#lastCalledTime = Date.now();
+        this.fps = 0;
+        return;
       }
 
-      this.frames++;
-
-      if (Date.now() - this.#timer > 1000) {
-        this.#timer ++;
-        this.updates = 0; 
-        this.frames = 0;
-      }
+      var delta = (Date.now() - this.#lastCalledTime)/1000;
+      this.#lastCalledTime = Date.now();
+      this.fps = 1/delta;
 
       const error = GL.getError();
       if (error !== GL.NO_ERROR) {
