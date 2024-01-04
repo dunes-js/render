@@ -14,6 +14,11 @@ export class Program extends WebGLClass
     }
   }
 
+  public get program()
+  {
+    return this.#program;
+  }
+
   public onVertex(source: string): void
   {
     const shader = Program.createShader(this.GL, source, this.GL.VERTEX_SHADER);
@@ -41,6 +46,11 @@ export class Program extends WebGLClass
     this.GL.useProgram(this.#program);
   }
 
+  public unuse(): void
+  {
+    this.GL.useProgram(null);
+  }
+
   private static createShader(GL: WebGLRenderingContext, source: string, type: number)
   {
     const shader = GL.createShader(type)!;
@@ -55,5 +65,50 @@ export class Program extends WebGLClass
     }
 
     return shader;
+  }
+
+  public setBool(name: string, value: boolean)
+  {
+    this.GL.uniform1i(name, value?1:0);
+  }
+
+  public setInt(name: string, value: number)
+  {
+    this.GL.uniform1i(name, value);
+  }
+
+  public setFloat(name: string, value: number)
+  {
+    this.GL.uniform1f(name, value);
+  }
+
+  public setVec2(name: string, value: number[], offset?: number, length?: number)
+  {
+    this.GL.uniform2fv(name, value, offset, length);
+  }
+
+  public setVec3(name: string, value: number[], offset?: number, length?: number)
+  {
+    this.GL.uniform3fv(name, value, offset, length);
+  }
+
+  public setVec4(name: string, value: number[], offset?: number, length?: number)
+  {
+    this.GL.uniform4fv(name, value, offset, length);
+  }
+
+  public setMat2(name: string, value: number[], transpose = false, offset?: number, length?: number)
+  {
+    this.GL.uniformMatrix2fv(name, transpose, value, offset, length);
+  }
+
+  public setMat3(name: string, value: number[], transpose = false, offset?: number, length?: number)
+  {
+    this.GL.uniformMatrix3fv(name, transpose, value, offset, length);
+  }
+
+  public setMat4(name: string, value: number[], transpose = false, offset?: number, length?: number)
+  {
+    this.GL.uniformMatrix4fv(name, transpose, value, offset, length);
   }
 }
