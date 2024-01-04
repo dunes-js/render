@@ -75,7 +75,7 @@ export class Program extends WebGLClass
   public setBool(name: string, value: boolean)
   {
     this.GL.uniform1i(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value?1:0
     );
   }
@@ -83,7 +83,7 @@ export class Program extends WebGLClass
   public setInt(name: string, value: number)
   {
     this.GL.uniform1i(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value
     );
   }
@@ -91,7 +91,7 @@ export class Program extends WebGLClass
   public setFloat(name: string, value: number)
   {
     this.GL.uniform1f(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value
     );
   }
@@ -99,7 +99,7 @@ export class Program extends WebGLClass
   public setVec2(name: string, value: number[], offset?: number, length?: number)
   {
     this.GL.uniform2fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
@@ -107,7 +107,7 @@ export class Program extends WebGLClass
   public setVec3(name: string, value: number[], offset?: number, length?: number)
   {
     this.GL.uniform3fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
@@ -115,7 +115,7 @@ export class Program extends WebGLClass
   public setVec4(name: string, value: number[], offset?: number, length?: number)
   {
     this.GL.uniform4fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       value, offset, length
     );
   }
@@ -123,7 +123,7 @@ export class Program extends WebGLClass
   public setMat2(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
     this.GL.uniformMatrix2fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }
@@ -131,7 +131,7 @@ export class Program extends WebGLClass
   public setMat3(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
     this.GL.uniformMatrix3fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }
@@ -139,7 +139,7 @@ export class Program extends WebGLClass
   public setMat4(name: string, value: number[], transpose = false, offset?: number, length?: number)
   {
     this.GL.uniformMatrix4fv(
-      this.uniform(name), 
+      this.GL.getUniformLocation(this.#program, name), 
       transpose, value, offset, length
     );
   }
