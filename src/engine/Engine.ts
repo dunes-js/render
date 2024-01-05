@@ -5,26 +5,29 @@ export abstract class Engine
 
   #running = true;
 
-  #lastCalledTime = 0;
-  fps = 0;
-  delta = 0; 
-  delay = 0; 
+  #lastFrameTime = 0;
+  protected deltaFrames = 0; 
+
+  #lastUpdateTime = 0;
+  protected deltaUpdates = 0; 
+
+  protected fps = 0;
+  protected upd = 0;
+  protected delay = 0; 
+  
+  protected update_d = 0.1; 
 
   public async run()
   {
     await this.init();
 
-    this.#lastCalledTime = Date.now();
+    this.#lastFrameTime = Date.now();
     this.fps = 0;
 
     while(this.#running)
     {
-      await this.render();
-      await this.update();
-
-      var delta = (Date.now() - this.#lastCalledTime)/1000;
-      this.#lastCalledTime = Date.now();
-      this.fps = 1/delta;
+      await this.#render();
+      await this.#update();
 
       const error = GL.getError();
       if (error !== GL.NO_ERROR) {
@@ -38,6 +41,27 @@ export abstract class Engine
       }
     }
     await this.conclude();
+  }
+
+  async #render()
+  {
+    await this.render();
+    
+    this.deltaFrames = (Date.now() - this.#lastFrameTime) / 1000;
+    this.#lastFrameTime = Date.now();
+    this.fps = 1/this.deltaFrames;
+  }
+
+  async #update()
+  {
+    const delta = (Date.now() - this.#lastUpdateTime)/1000;
+    if (delta < this.update_d) return;
+
+    await this.update();
+
+    this.deltaUpdates = delta;
+    this.#lastUpdateTime = Date.now();
+    this.upd = 1/this.deltaUpdates;
   }
 
   protected abstract init(): Promise<void>;
