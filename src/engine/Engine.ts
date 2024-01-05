@@ -12,18 +12,15 @@ export abstract class Engine
 
   public async run()
   {
-
     await this.init();
+
+    this.#lastCalledTime = Date.now();
+    this.fps = 0;
+
     while(this.#running)
     {
       await this.render();
       await this.update();
-
-      if(!this.#lastCalledTime) {
-        this.#lastCalledTime = Date.now();
-        this.fps = 0;
-        return;
-      }
 
       var delta = (Date.now() - this.#lastCalledTime)/1000;
       this.#lastCalledTime = Date.now();
@@ -32,6 +29,7 @@ export abstract class Engine
       const error = GL.getError();
       if (error !== GL.NO_ERROR) {
         console.error('WebGL error:', error);
+        break;
       }
 
       if (this.delay)
