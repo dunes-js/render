@@ -13,8 +13,8 @@ export abstract class Engine
 
   protected fps = 0;
   protected upd = 0;
-  protected delay = 0; 
   
+  protected delay = 10;
   protected update_d = 0.1; 
 
   public async run()
