@@ -6,16 +6,16 @@ export abstract class Engine
   #running = true;
 
   #lastFrameTime = 0;
-  protected deltaFrames = 0; 
+  deltaFrames = 0; 
 
   #lastUpdateTime = 0;
-  protected deltaUpdates = 0; 
+  deltaUpdates = 0; 
 
-  protected fps = 0;
-  protected upd = 0;
+  fps = 0;
+  upd = 0;
   
-  protected delay = 10;
-  protected update_d = 0.1; 
+  delay = 10;
+  update_d = 0.1; 
 
   public async run()
   {
@@ -54,7 +54,7 @@ export abstract class Engine
 
   async #update()
   {
-    const delta = (Date.now() - this.#lastUpdateTime)/1000;
+    const delta = (Date.now() - this.#lastUpdateTime) / 1000;
     if (delta < this.update_d) return;
 
     await this.update();
